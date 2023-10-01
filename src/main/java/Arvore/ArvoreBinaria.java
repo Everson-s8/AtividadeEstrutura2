@@ -166,11 +166,19 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
         return false;
     }
 
+
+    //Usando eh completa para chamar um ehcompleta recusivamente
+    // alturaTotal recebendo altura
+    // e depois chamando a recursividade
     @Override
     public boolean ehCompleta() throws ArvoreVaziaException {
         int alturaTotal = altura(root);
         return ehCompletarecusivo(root,0, alturaTotal);
     }
+
+    // ehcompletarecursivo é uma recursividade do eh completa
+    // primeiro compara se o no for null, se for está completo então retorna true
+    // Nível maior ou igual à altura indica árvore não completa
 
     private boolean ehCompletarecusivo(No no, int nivelatual,int alturaTotal){
         if (no == null){
