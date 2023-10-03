@@ -8,7 +8,7 @@ public interface IArvore<T> {
 
   No inserir(No no, No valor)throws Exception;
   No remover(No no) throws ArvoreVaziaException, NoInexistenteException;
-  int buscar(No no) throws ArvoreVaziaException, NoInexistenteException;
+  T buscar(No no) throws ArvoreVaziaException, NoInexistenteException;
   No visitar(No no, No Atual) throws NoInexistenteException;
   
   boolean estaVazia();

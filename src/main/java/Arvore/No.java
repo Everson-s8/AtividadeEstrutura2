@@ -1,19 +1,19 @@
 package Arvore;
 
 import Interfaces.INo;
-public class No<T> implements INo<T> {
-    private Integer dado;
+public class No<T extends Comparable<T>> implements INo<T> {
+    private T dado;
     private No<T> pai;
     private No<T> esquerda;
     private No<T> direita;
 
-    public No(int elemento){
+    public No(T elemento){
         dado = elemento;
         pai = esquerda = direita = null;
     }
 
     @Override
-    public void setValor(int valor) {
+    public void setValor(T valor) {
         this.dado = valor;
     }
 
@@ -33,7 +33,7 @@ public class No<T> implements INo<T> {
     }
 
     @Override
-    public int getValor() {
+    public T getValor() {
         return dado;
     }
 
@@ -58,16 +58,15 @@ public class No<T> implements INo<T> {
     // se os valores forem iguais return 0
     // se os valor do outro No for maior return 1
     // se o valor for menor return -1
+
+
     @Override
-    public int compareTo(No<T> outro) {
-       if (outro.dado == dado){
-           return 0;
-       }else if (outro.dado > dado){
-           return 1;
-       }
-       return -1;
+    public int compareTo(T o) {
+        System.out.println("Valor o");
+        return dado.compareTo(o);
     }
-
-
-
 }
+
+
+
+

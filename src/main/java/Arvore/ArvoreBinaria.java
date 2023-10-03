@@ -20,7 +20,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
 
     // Um metodo para chamar recursividade do No inserir, assim sendo mais facil para o usuario inserir o dado
     // Após o metodo ser chamado atualiza a árvore
-    public void inserirNo(int valor) throws Exception {
+    public void inserirNo(T valor) throws Exception {
         root = inserir(root, new No(valor));
     }
 
@@ -32,7 +32,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
             atual = valor;
             return atual;
         }
-        if (atual.compareTo(valor) == -1){                   // Para descobrir se o valor é maior ou menor que o valor atual
+        if (valor.getValor().compareTo(atual.getValor()) < 0){                   // Para descobrir se o valor é maior ou menor que o valor atual
             if (atual.getFilhoEsq() != null){                // Se o valor for menor, faz um If para verificar se tem espaço disponivel para entrar a esquerda( onde fica o valor menor)
                 inserir(atual.getFilhoEsq(), valor);         // Se não tiver espaço chama recursivamente novamente o metodo para pecorre até encontra o espaço que esteja livre
             }else {
@@ -81,9 +81,9 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
             return atual;
         }
 
-        if (dado.getValor() < atual.getValor()){                                  // ver se o valor está a direita ou a esquerda do atual, para assim pecorre até achar o pretendido
+        if (dado.getValor().compareTo(atual.getValor())<0){                                  // ver se o valor está a direita ou a esquerda do atual, para assim pecorre até achar o pretendido
             atual.setFilhoEsq(removerRecursivo(atual.getFilhoEsq(), dado));
-        } else if (dado.getValor() > atual.getValor()) {
+        } else if (dado.getValor().compareTo(atual.getValor())>0) {
             atual.setFilhoDir(removerRecursivo(atual.getFilhoDir(), dado));
         }else {
             if (atual.getFilhoEsq() == null){                                     // Verifica se o No tem filho na esquerda, se não tiver está na direita ou não tem filhos
@@ -99,10 +99,10 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
 
     }
 
-    private int maxValue(No no){
-        int maxValue = no.getValor();
+    private T maxValue(No no){
+        T maxValue = (T) no.getValor();
         while (no.getFilhoDir() != null){
-            maxValue = no.getFilhoDir().getValor();
+            maxValue = (T) no.getFilhoDir().getValor();
             no = no.getFilhoDir();
         }
         return maxValue;
@@ -120,7 +120,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
         if (dado.getValor() == atual.getValor()){               // Comparando para ver se o dado que se pretende encontra é igual o que existe na arvore
             return atual;                                       // Se for retorna a posição dele na arvore
         }else{
-            if (dado.getValor()< atual.getValor()){             // Vendo se o valor está a direita ou esquerda do atual que está sendo comparando determinando para onde vai buscar ele( assim reduzindo o número de busca)
+            if (dado.getValor().compareTo(atual.getValor())<0){             // Vendo se o valor está a direita ou esquerda do atual que está sendo comparando determinando para onde vai buscar ele( assim reduzindo o número de busca)
                 return visitar(dado, atual.getFilhoEsq());      // chama a recursividade para visistar a esquerda, já que o dado era menor que o atual
             }else {
                 return visitar(dado,atual.getFilhoDir());       // mesma coisa que a esquerda só que a direita.
@@ -135,7 +135,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
     // se o valor do no for igual o do atual significa que achou o valor na arvore
     // se não vai procurar se o valor está a direita ou a esquerda da arvore, fazendo isso até encontra o valor
     @Override
-    public int buscar(No no) throws ArvoreVaziaException, NoInexistenteException {
+    public T buscar(No no) throws ArvoreVaziaException, NoInexistenteException {
         if (estaVazia()){
             throw new ArvoreVaziaException("A arvore está vazia");
         }
@@ -147,9 +147,9 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
                 throw new NoInexistenteException("Elemento inexistente");
             }
             if (no.getValor() == atual.getValor()){
-                return atual.getValor();
+                return (T) atual.getValor();
             }else {
-                if (no.getValor() < atual.getValor()){
+                if (no.getValor().compareTo(atual.getValor())<0){
                     atual = atual.getFilhoEsq();
                 }else {
                     atual = atual.getFilhoDir();
@@ -203,7 +203,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
     @Override
     public int altura(No no) throws ArvoreVaziaException {
         if (no == null){
-           return -1;
+            return -1;
         }else {
 
             int alturaEsquerda = altura(no.getFilhoEsq());
@@ -281,6 +281,6 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria {
     }
 
     public void limparArvore(){
-        this.root = null;
-    }
+        this.root=null;
+}
 }
